@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Dapur Manis adalah game memasak edukatif. Susun bahan dan langkah dengan benar, pelajari kebersihan dapur, lalu kumpulkan bintang.">
+<meta name="author" content="Studio Dapur Manis">
+<meta name="theme-color" content="#f6b8c9">
+<meta name="color-scheme" content="light">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Dapur Manis">
+<meta name="mobile-web-app-capable" content="yes">
+<meta property="og:type" content="game">
+<meta property="og:title" content="Dapur Manis — Koki Cilik">
+<meta property="og:description" content="Game memasak edukatif dengan resep mini, tantangan dapur bersih, dan hadiah bintang.">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Dapur Manis">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dapur Manis — Koki Cilik">
+<meta name="twitter:description" content="Susun bahan dan langkah memasak, lalu jadilah koki andalan.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23f6b8c9'/%3E%3Cpath d='M17 35h30l-4 17H21z' fill='%23fff5f0' stroke='%23944f68' stroke-width='2'/%3E%3Cpath d='M20 31c-8-12 8-21 12-9 6-12 22-3 12 9' fill='%23fff' stroke='%23944f68' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23f6b8c9'/%3E%3Cpath d='M17 35h30l-4 17H21z' fill='%23fff5f0' stroke='%23944f68' stroke-width='2'/%3E%3Cpath d='M20 31c-8-12 8-21 12-9 6-12 22-3 12 9' fill='%23fff' stroke='%23944f68' stroke-width='2'/%3E%3C/svg%3E">
+<title>Dapur Manis — Koki Cilik</title>
+<style>
+:root{--pink:oklch(82% .09 5);--pink-deep:oklch(54% .13 8);--cream:oklch(97% .025 65);--ink:oklch(29% .045 15);--mint:oklch(82% .09 155);--yellow:oklch(87% .13 85);--line:oklch(84% .045 15);--white:oklch(99% .012 65);--shadow:0 12px 28px rgba(111,58,75,.12);--display:Georgia,"Times New Roman",serif;--body:"Trebuchet MS",Verdana,sans-serif}
+*{box-sizing:border-box}
+html{min-height:100%;-webkit-text-size-adjust:100%;overscroll-behavior:none}
+body{margin:0;min-height:100vh;min-height:100dvh;background:var(--cream);color:var(--ink);font:16px/1.5 var(--body);overflow-x:hidden;touch-action:manipulation}
+button{font:inherit;color:inherit;cursor:pointer;min-height:46px;border:0}
+button:focus-visible{outline:3px solid var(--pink-deep);outline-offset:3px}
+button:disabled{cursor:not-allowed;opacity:.48}
+button,.nav-button,.ingredient{ -webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.shell{max-width:1160px;margin:auto;padding:20px clamp(16px,4vw,48px) 32px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 0 22px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:-.03em}
+.brand-mark{width:44px;height:44px;border-radius:15px;background:var(--pink);display:grid;place-items:center;font-size:25px;box-shadow:3px 4px 0 var(--pink-deep)}
+.brand small{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--pink-deep)}
+.nav{display:flex;gap:8px;align-items:center}
+.nav-button{background:transparent;padding:10px 14px;border-radius:999px;font-weight:700}
+.nav-button[aria-current="page"],.nav-button:hover{background:#f7d9e1}
+.menu-toggle{display:none;background:var(--white);border:1px solid var(--line);border-radius:12px;width:46px}
+main{padding-top:28px}
+.screen{display:none;animation:arrive .38s ease both}
+.screen.active{display:block}
+@keyframes arrive{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;min-height:430px}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;font-weight:900;color:var(--pink-deep)}
+h1,h2,h3,p{margin-top:0}
+h1{font:clamp(2.7rem,6vw,5.4rem)/.98 var(--display);letter-spacing:-.045em;margin:14px 0 18px;max-width:620px}
+h2{font:clamp(2rem,4vw,3.2rem)/1.05 var(--display);letter-spacing:-.035em;margin-bottom:10px}
+h3{font:1.2rem var(--display)}
+.lead{font-size:1.1rem;max-width:520px;color:#674d55}
+.hero-art{min-height:340px;position:relative;display:grid;place-items:center}
+.plate{width:min(78%,340px);aspect-ratio:1;border-radius:50%;background:#fff8f2;border:15px solid #f3d9d5;box-shadow:inset 0 0 0 2px #e8b9bd,0 20px 40px rgba(111,58,75,.12);display:grid;place-items:center;font-size:clamp(6rem,15vw,10rem);transform:rotate(-8deg)}
+.sticker{position:absolute;padding:12px 16px;background:var(--yellow);border:2px solid var(--ink);border-radius:18px;font-weight:900;box-shadow:4px 4px 0 var(--ink);transform:rotate(7deg)}
+.sticker.one{top:15%;right:4%}.sticker.two{bottom:13%;left:1%;background:var(--mint);transform:rotate(-8deg)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{padding:12px 22px;border-radius:999px;font-weight:900;transition:transform .16s,box-shadow .16s;background:var(--pink-deep);color:white;box-shadow:0 4px 0 #783c50}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #783c50}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #783c50}
+.btn.secondary{background:var(--white);color:var(--ink);border:1px solid var(--line);box-shadow:0 4px 0 var(--line)}
+.btn.soft{background:var(--mint);color:var(--ink);box-shadow:0 4px 0 #679b82}
+.stats{display:flex;gap:22px;margin-top:28px;flex-wrap:wrap}
+.stat strong{font:1.8rem var(--display);display:block}
+.stat span{font-size:.82rem;color:#735c63}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:22px}
+.recipe-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.recipe-note{padding:18px;background:#fff8f2;border:1px solid var(--line);border-radius:4px 22px 22px 22px}
+.recipe-note .emoji{font-size:30px}
+.recipe-note p{margin:6px 0 0;font-size:.92rem;color:#674d55}
+.game-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:22px;align-items:start}
+.game-board{background:#fff8f2;border:1px solid var(--line);border-radius:28px;padding:clamp(16px,3vw,28px);box-shadow:var(--shadow)}
+.hud{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.pill{background:#f7d9e1;border-radius:999px;padding:7px 13px;font-weight:900;font-size:.9rem}
+.progress{height:9px;background:#f0dfe0;border-radius:99px;overflow:hidden;margin:14px 0 24px}
+.progress span{display:block;height:100%;width:0;background:var(--pink-deep);transition:width .25s}
+.order-title{font:clamp(1.7rem,4vw,2.5rem)/1.1 var(--display);margin-bottom:8px}
+.instruction{color:#674d55;margin-bottom:20px}
+.step-label{font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:var(--pink-deep)}
+.ingredient-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ingredient{background:var(--white);border:2px solid var(--line);border-radius:18px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;min-height:104px;font-weight:800;transition:border .15s,transform .15s,background .15s}
+.ingredient .food{font-size:34px;line-height:1.2}
+.ingredient:hover{border-color:var(--pink-deep);transform:translateY(-2px)}
+.ingredient:active{transform:scale(.97)}
+.ingredient.chosen{background:#f7d9e1;border-color:var(--pink-deep)}
+.ingredient.correct{background:#e0f1e4;border-color:#5e9674}
+.ingredient.wrong{background:#f8e0d7;border-color:#b45a48}
+.side-panel{background:var(--mint);padding:22px;border-radius:24px 24px 4px 24px}
+.side-panel ul{padding-left:20px;margin-bottom:0}
+.side-panel li{margin:9px 0}
+.feedback{min-height:56px;margin-top:18px;padding:12px 14px;background:#f8e7e8;border-left:4px solid var(--pink-deep);border-radius:4px 12px 12px 4px;font-weight:700}
+.feedback.good{background:#e5f2e7;border-color:#4e8b65}
+.feedback.bad{background:#f9e3dc;border-color:#b45a48}
+.order-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;flex-wrap:wrap}
+.selection{font-size:.9rem;color:#674d55}
+.panel{max-width:760px;margin:0 auto;background:#fff8f2;border:1px solid var(--line);padding:clamp(20px,5vw,38px);border-radius:28px;box-shadow:var(--shadow)}
+.setting-row{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:16px 0;border-bottom:1px solid var(--line)}
+.setting-row:last-child{border:0}
+select{font:inherit;font-size:16px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:white;color:var(--ink);min-height:44px}
+.switch{display:flex;align-items:center;gap:10px;font-weight:800}
+.switch input{width:22px;height:22px;accent-color:var(--pink-deep)}
+.modal-backdrop{position:fixed;inset:0;background:rgba(53,31,39,.58);display:none;place-items:center;padding:18px;z-index:10}
+.modal-backdrop.open{display:grid}
+.modal{width:min(100%,520px);background:var(--cream);border:2px solid var(--ink);border-radius:26px;padding:28px;box-shadow:8px 8px 0 var(--ink);max-height:min(90dvh,720px);overflow:auto}
+.modal h2{font-size:2.3rem}
+.modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.toast{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:12px 18px;border-radius:99px;z-index:20;display:none;max-width:90%;text-align:center}
+.toast.show{display:block;animation:arrive .2s ease}
+footer{padding:26px 0 8px;margin-top:38px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#735c63;font-size:.85rem}
+.small{font-size:.88rem;color:#735c63}
+.hidden{display:none!important}
+@media(max-width:900px){.hero{gap:14px}.game-layout{grid-template-columns:1fr}.side-panel{display:grid;grid-template-columns:1fr 1fr;gap:12px}.side-panel h3{grid-column:1/-1}}
+@media(max-width:768px){.shell{padding:14px 18px 26px}.topbar{padding-bottom:14px}.menu-toggle{display:block}.nav{display:none;position:absolute;right:18px;top:72px;z-index:5;background:var(--cream);border:1px solid var(--line);border-radius:18px;padding:8px;box-shadow:var(--shadow);flex-direction:column;align-items:stretch;min-width:180px}.nav.open{display:flex}.nav-button{text-align:left}.hero{grid-template-columns:1fr;min-height:0}.hero-art{min-height:250px;grid-row:1}.plate{width:220px}.sticker.one{right:12%}.sticker.two{left:10%}.hero-copy{padding-bottom:18px}.recipe-strip{grid-template-columns:1fr 1fr}.section-head{align-items:start;flex-direction:column}.side-panel{grid-template-columns:1fr}}
+@media(max-width:480px){body{font-size:16px}.shell{padding-left:14px;padding-right:14px}main{padding-top:20px}h1{font-size:3rem}.hero-art{min-height:220px}.plate{width:190px;border-width:10px}.sticker{font-size:.82rem;padding:9px 12px}.recipe-strip{grid-template-columns:1fr}.ingredient-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ingredient{min-height:96px}.order-footer{align-items:stretch}.order-footer .btn{width:100%}.hud{font-size:.84rem}.panel{padding:20px}.setting-row{align-items:flex-start;flex-direction:column;gap:8px}footer{flex-direction:column}}
+@media(min-width:1200px){.hero{min-height:490px}.hero-art{min-height:420px}}
+@media(orientation:landscape) and (max-height:560px){.hero{min-height:300px}.hero-art{min-height:250px}.plate{width:210px}main{padding-top:14px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+@supports(height:100dvh){.modal{max-height:90dvh}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <div class="brand"><div class="brand-mark" aria-hidden="true">🍓</div><div>DAPUR MANIS<small>klub koki cilik</small></div></div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Buka navigasi" aria-expanded="false">☰</button>
+  <nav class="nav" id="nav" aria-label="Navigasi utama">
+    <button class="nav-button" data-screen="home" aria-current="page">Beranda</button>
+    <button class="nav-button" data-screen="how">Cara Main</button>
+    <button class="nav-button" data-screen="settings">Pengaturan</button>
+  </nav>
+</header>
+<main>
+<section class="screen active" id="home">
+  <div class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">Resep kecil, ilmu besar</div>
+      <h1>Hari ini kita masak <em>yang manis!</em></h1>
+      <p class="lead">Pilih bahan yang tepat, ikuti urutan memasak, dan jaga dapur tetap bersih. Setiap resep punya ilmu baru untuk dipelajari.</p>
+      <div class="actions">
+        <button class="btn" id="startBtn">Mulai memasak <span aria-hidden="true">→</span></button>
+        <button class="btn secondary" id="howBtn">Lihat cara main</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong id="bestScore">0</strong><span>skor terbaik</span></div>
+        <div class="stat"><strong id="starCount">0</strong><span>bintang terkumpul</span></div>
+      </div>
+    </div>
+    <div class="hero-art" aria-label="Ilustrasi mangkuk berisi stroberi" role="img">
+      <div class="plate" aria-hidden="true">🍓🥣</div>
+      <div class="sticker one">YUM!</div><div class="sticker two">Dapur bersih ✦</div>
+    </div>
+  </div>
+  <div class="section-head"><div><div class="eyebrow">Menu hari ini</div><h2>Belajar sambil meracik</h2></div><p class="small">Tiga resep mini menunggumu.</p></div>
+  <div class="recipe-strip">
+    <article class="recipe-note"><div class="emoji" aria-hidden="true">🥗</div><h3>Salad buah</h3><p>Kenali buah segar dan cara mencucinya.</p></article>
+    <article class="recipe-note"><div class="emoji" aria-hidden="true">🥪</div><h3>Roti pelangi</h3><p>Susun isian dengan rapi dan seimbang.</p></article>
+    <article class="recipe-note"><div class="emoji" aria-hidden="true">🍌</div><h3>Puding pisang</h3><p>Pelajari urutan mencampur bahan.</p></article>
+  </div>
+</section>
+<section class="screen" id="game">
+  <div class="section-head"><div><div class="eyebrow">Tantangan dapur</div><h2>Pesanan masuk!</h2></div><button class="btn secondary" id="pauseBtn">Ⅱ Jeda</button></div>
+  <div class="game-layout">
+    <div class="game-board">
+      <div class="hud" aria-live="polite"><span class="pill" id="roundPill">Resep 1 / 5</span><span class="pill" id="scorePill">Skor 0</span><span class="pill" id="streakPill">Runtun 0 ✦</span></div>
+      <div class="progress" aria-label="Kemajuan permainan"><span id="progressBar"></span></div>
+      <div class="step-label">Pesanan pelanggan</div>
+      <div class="order-title" id="dishName">Salad buah ceria 🥗</div>
+      <p class="instruction" id="dishInstruction">Pilih bahan sesuai resep. Urutannya penting!</p>
+      <div class="step-label">Pilih bahan satu per satu</div>
+      <div class="ingredient-grid" id="ingredientGrid"></div>
+      <div class="feedback" id="feedback" role="status" aria-live="polite">Dapur sudah siap. Pilih bahan pertama!</div>
+      <div class="order-footer"><span class="selection" id="selectionText">Bahan dipilih: 0</span><button class="btn soft" id="serveBtn" disabled>Sajikan pesanan ✓</button></div>
+    </div>
+    <aside class="side-panel"><h3>Catatan koki 🍒</h3><div><strong>Ingat sebelum memasak:</strong><ul><li>Cuci tangan dengan sabun.</li><li>Cuci buah dan sayur di air mengalir.</li><li>Pisahkan alat untuk bahan mentah.</li><li>Minta bantuan orang dewasa saat memakai kompor atau pisau.</li></ul></div></aside>
+  </div>
+</section>
+<section class="screen" id="how">
+  <div class="panel">
+    <div class="eyebrow">Panduan singkat</div><h2>Jadi koki yang teliti</h2>
+    <p>Di setiap ronde, pelanggan memesan satu hidangan. Pilih bahan sesuai urutan resep, lalu tekan <b>Sajikan pesanan</b>.</p>
+    <ol><li><b>Baca pesanan.</b> Perhatikan nama hidangan dan petunjuknya.</li><li><b>Pilih bahan.</b> Tekan bahan satu per satu sesuai urutan. Pilihan bisa dibatalkan dengan menekannya lagi.</li><li><b>Sajikan.</b> Jawaban benar mendapat poin. Kesalahan akan diberi petunjuk agar kamu belajar.</li><li><b>Selesaikan 5 resep.</b> Kumpulkan skor dan bintang sebanyak mungkin.</li></ol>
+    <h3>Yang perlu kamu tahu</h3><p>Game ini mengajarkan pemilihan bahan dan kebiasaan dapur bersih. Kegiatan nyata seperti memotong atau memasak dengan panas harus didampingi orang dewasa.</p>
+    <div class="actions"><button class="btn" id="howStartBtn">Ayo mulai</button><button class="btn secondary" data-goto="home">Kembali</button></div>
+    <p class="small">Pintasan: tombol Enter untuk mulai dari beranda, Esc atau P untuk jeda saat bermain, M untuk suara, F untuk layar penuh, R untuk mengulang permainan.</p>
+  </div>
+</section>
+<section class="screen" id="settings">
+  <div class="panel">
+    <div class="eyebrow">Atur dapurmu</div><h2>Pengaturan</h2>
+    <div class="setting-row"><div><b>Efek suara</b><div class="small">Bunyi kecil saat memilih bahan.</div></div><label class="switch"><input type="checkbox" id="soundToggle" checked> Aktif</label></div>
+    <div class="setting-row"><div><b>Tingkat tantangan</b><div class="small">Mengubah jumlah bahan pengalih perhatian.</div></div><select id="difficulty"><option value="easy">Santai</option><option value="normal">Standar</option><option value="hard">Teliti</option></select></div>
+    <div class="setting-row"><div><b>Getaran</b><div class="small">Umpan balik singkat di perangkat yang mendukung.</div></div><label class="switch"><input type="checkbox" id="vibrateToggle"> Aktif</label></div>
+    <div class="actions"><button class="btn secondary" id="resetDataBtn">Reset data tersimpan</button><button class="btn" data-goto="home">Selesai</button></div>
+    <p class="small" id="settingsStatus" role="status" aria-live="polite">Pengaturan tersimpan otomatis di perangkat ini.</p>
+  </div>
+</section>
+<section class="screen" id="result">
+  <div class="panel" style="text-align:center">
+    <div class="eyebrow">Pesanan selesai</div><div style="font-size:64px" aria-hidden="true" id="resultEmoji">🏆</div>
+    <h2 id="resultTitle">Dapur hebat!</h2><p id="resultText">Kamu menyelesaikan semua resep.</p>
+    <div class="stats" style="justify-content:center"><div class="stat"><strong id="finalScore">0</strong><span>skor akhir</span></div><div class="stat"><strong id="finalStars">0</strong><span>bintang ronde</span></div></div>
+    <div class="actions" style="justify-content:center"><button class="btn" id="againBtn">Main lagi</button><button class="btn secondary" data-goto="home">Ke beranda</button></div>
+  </div>
+</section>
+</main>
+<footer><span>© 2026 Dapur Manis · Belajar, meracik, berbagi.</span><span>Masak aman, hati senang ♡</span></footer>
+</div>
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+ <div class="modal"><div class="eyebrow">Dapur berhenti sebentar</div><h2 id="modalTitle">Permainan dijeda</h2><p id="modalText">Tarik napas, lalu lanjutkan saat siap.</p><div class="modal-actions" id="modalActions"></div></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const STORAGE_KEY = 'app_v1_state';
+const RECIPES = [
+ {name:'Salad buah ceria',emoji:'🥗',hint:'Mulai dari buah yang sudah dicuci, lalu campur dengan yoghurt.',steps:['🍎 Apel','🍌 Pisang','🍇 Anggur','🥣 Yoghurt'],lesson:'Buah perlu dicuci dengan air mengalir sebelum dipotong atau dimakan.'},
+ {name:'Roti pelangi',emoji:'🥪',hint:'Siapkan roti, sayuran segar, lalu beri keju.',steps:['🍞 Roti tawar','🥬 Selada','🍅 Tomat','🧀 Keju'],lesson:'Sayuran segar sebaiknya dicuci bersih dan dikeringkan sebelum disusun.'},
+ {name:'Puding pisang',emoji:'🍮',hint:'Campurkan bahan utama dan aduk hingga rata.',steps:['🥛 Susu','🍌 Pisang','🥄 Bubuk puding','🍯 Madu'],lesson:'Baca petunjuk kemasan bahan dan minta pendampingan orang dewasa saat memakai kompor.'},
+ {name:'Jus semangka',emoji:'🍉',hint:'Masukkan buah dan air, lalu haluskan dengan blender.',steps:['🍉 Semangka','💧 Air matang','🧊 Es batu','🍋 Jeruk nipis'],lesson:'Gunakan air matang. Pastikan blender tertutup dan digunakan dengan bantuan orang dewasa.'},
+ {name:'Sate buah warna-warni',emoji:'🍡',hint:'Susun potongan buah warna-warni secara bergantian.',steps:['🍓 Stroberi','🍍 Nanas','🍈 Melon','🍇 Anggur'],lesson:'Tusuk sate bisa tajam. Minta orang dewasa menyiapkan tusuk dan memotong buah.'}
+];
+const DISTRACTORS = ['🥕 Wortel','🥒 Timun','🍪 Biskuit','🍫 Cokelat','🥚 Telur','🧅 Bawang','🍚 Nasi','🥜 Kacang'];
+let saved = loadState();
+let state = 'menu', round = 0, score = 0, streak = 0, stars = 0, chosen = [], currentOptions = [], audio = null, wakeLock = null, toastTimer = 0, gameStarted = false, advanceTimer = 0, pendingAdvance = false;
+function defaults(){return {best:0,totalStars:0,sound:true,vibrate:false,difficulty:'normal',onboarded:false};}
+function loadState(){
+ try { const raw=localStorage.getItem(STORAGE_KEY); if(!raw)return defaults(); const data=JSON.parse(raw); if(!data||typeof data!=='object'||data.version!==1)return defaults(); return {...defaults(),...data}; }
+ catch(_){return defaults();}
+}
+function saveState(){
+ try {localStorage.setItem(STORAGE_KEY,JSON.stringify({...saved,version:1}));}
+ catch(_){$('settingsStatus').textContent='Penyimpanan perangkat penuh atau tidak tersedia. Reset data bisa membantu.';}
+}
+function showToast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2400);}
+function showScreen(name){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===name));
+ document.querySelectorAll('.nav-button').forEach(b=>{if(b.dataset.screen)b.setAttribute('aria-current',b.dataset.screen===name?'page':'false');});
+ $('nav').classList.remove('open');$('menuToggle').setAttribute('aria-expanded','false');
+}
+function updateHome(){$('bestScore').textContent=saved.best;$('starCount').textContent=saved.totalStars;}
+function getAudio(){
+ if(!saved.sound)return null;
+ try {const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;if(!audio)audio=new C();if(audio.state==='suspended')audio.resume().catch(()=>{});return audio;}catch(_){return null;}
+}
+function beep(freq=620,duration=.09){
+ if(!saved.sound)return;const ctx=getAudio();if(!ctx)return;
+ try{const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.value=freq;gain.gain.setValueAtTime(.0001,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.08,ctx.currentTime+.012);gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+duration);osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+duration+.02);}catch(_){}
+}
+function vibrate(ms=25){if(saved.vibrate&&navigator.vibrate){try{navigator.vibrate(ms);}catch(_){}}}
+async function acquireWakeLock(){try{if('wakeLock'in navigator)wakeLock=await navigator.wakeLock.request('screen');}catch(_){wakeLock=null;}}
+async function releaseWakeLock(){try{if(wakeLock){await wakeLock.release();wakeLock=null;}}catch(_){wakeLock=null;}}
+function startGame(){
+ round=0;score=0;streak=0;stars=0;chosen=[];pendingAdvance=false;clearTimeout(advanceTimer);gameStarted=true;initRound();state='playing';showScreen('game');acquireWakeLock();getAudio();saved.onboarded=true;saveState();
+}
+function initRound(){
+ chosen=[];const recipe=RECIPES[round];const count=saved.difficulty==='easy'?2:saved.difficulty==='hard'?5:3;
+ const distractors=[...DISTRACTORS].sort(()=>Math.random()-.5).slice(0,count);
+ currentOptions=[...recipe.steps,...distractors].sort(()=>Math.random()-.5);
+ $('roundPill').textContent=`Resep ${round+1} / ${RECIPES.length}`;$('scorePill').textContent=`Skor ${score}`;$('streakPill').textContent=`Runtun ${streak} ✦`;
+ $('progressBar').style.width=`${round/RECIPES.length*100}%`;$('dishName').textContent=`${recipe.name} ${recipe.emoji}`;$('dishInstruction').textContent=recipe.hint;
+ $('selectionText').textContent='Bahan dipilih: 0';$('serveBtn').disabled=true;
+ setFeedback('Pilih bahan sesuai urutan resep. Kamu pasti bisa!','');
+ renderIngredients();
+}
+function renderIngredients(){
+ const grid=$('ingredientGrid');grid.replaceChildren();
+ currentOptions.forEach(item=>{
+  const b=document.createElement('button');b.className='ingredient';b.type='button';b.setAttribute('aria-pressed',chosen.includes(item)?'true':'false');
+  const parts=item.split(' ');const food=document.createElement('span');food.className='food';food.textContent=parts.shift();const label=document.createElement('span');label.textContent=parts.join(' ');
+  b.append(food,label);
+  if(chosen.includes(item))b.classList.add('chosen');
+  b.addEventListener('click',()=>toggleIngredient(item,b));grid.append(b);
+ });
+}
+function setFeedback(message,kind){const el=$('feedback');el.textContent=message;el.className='feedback'+(kind?' '+kind:'');}
+function toggleIngredient(item,button){
+ if(state!=='playing')return;
+ if(chosen.includes(item)){chosen=chosen.filter(x=>x!==item);button.classList.remove('chosen');button.setAttribute('aria-pressed','false');}
+ else if(chosen.length<RECIPES[round].steps.length){chosen.push(item);button.classList.add('chosen');button.setAttribute('aria-pressed','true');beep(580+chosen.length*45);vibrate();setFeedback(`Tercatat: ${chosen.length} dari ${RECIPES[round].steps.length} bahan.`,'');}
+ $('selectionText').textContent=`Bahan dipilih: ${chosen.length}`;$('serveBtn').disabled=chosen.length!==RECIPES[round].steps.length;
+}
+function serve(){
+ if(state!=='playing'||chosen.length!==RECIPES[round].steps.length)return;
+ const recipe=RECIPES[round],correct=chosen.every((v,i)=>v===recipe.steps[i]);
+ if(correct){
+  const earned=100+streak*20;score+=earned;streak++;stars++;$('scorePill').textContent=`Skor ${score}`;$('streakPill').textContent=`Runtun ${streak} ✦`;
+  setFeedback(`Tepat! +${earned} poin. ${recipe.lesson}`,'good');beep(820,.16);vibrate(45);
+  [...$('ingredientGrid').children].forEach(b=>{if(chosen.includes(b.querySelector('span:last-child').textContent?b.querySelector('.food').textContent+' '+b.querySelector('span:last-child').textContent:b.textContent))b.classList.add('correct');});
+  $('serveBtn').disabled=true;$('serveBtn').textContent='Benar! ✓';
+  advanceTimer=setTimeout(()=>{if(state==='playing')advanceRound();else pendingAdvance=true;},1250);
+ }else{
+  streak=0;$('streakPill').textContent='Runtun 0 ✦';setFeedback('Belum tepat. Coba periksa lagi urutan dan jenis bahannya, lalu pilih ulang.','bad');beep(220,.16);vibrate(70);
+  [...$('ingredientGrid').children].forEach(b=>{b.classList.remove('chosen');b.setAttribute('aria-pressed','false');});
+  chosen=[];$('selectionText').textContent='Bahan dipilih: 0';$('serveBtn').disabled=true;
+ }
+}
+function advanceRound(){
+ clearTimeout(advanceTimer);pendingAdvance=false;round++;
+ if(round>=RECIPES.length)finishGame();else{$('serveBtn').textContent='Sajikan pesanan ✓';initRound();}
+}
+function finishGame(){
+ state='win';releaseWakeLock();saved.best=Math.max(saved.best,score);saved.totalStars+=stars;saveState();updateHome();
+ $('progressBar').style.width='100%';$('finalScore').textContent=score;$('finalStars').textContent=stars;$('resultTitle').textContent=score>=650?'Koki bintang lima!':'Koki hebat!';
+ $('resultText').textContent=`Kamu menyelesaikan 5 resep dan mendapat ${score} poin. Terus ingat kebiasaan dapur bersih, ya!`;$('resultEmoji').textContent=score>=650?'🏆':'🍓';showScreen('result');
+}
+function openModal(title,text,actions){
+ $('modalTitle').textContent=title;$('modalText').textContent=text;const wrap=$('modalActions');wrap.replaceChildren();
+ actions.forEach(a=>{const b=document.createElement('button');b.className='btn '+(a.secondary?'secondary':'');b.textContent=a.label;b.addEventListener('click',a.action);wrap.append(b);});
+ $('modalBackdrop').classList.add('open');
+}
+function closeModal(){$('modalBackdrop').classList.remove('open');}
+function pauseGame(){
+ if(state!=='playing')return;if(advanceTimer){clearTimeout(advanceTimer);advanceTimer=0;pendingAdvance=true;}state='paused';releaseWakeLock();
+ openModal('Permainan dijeda','Pesananmu aman. Lanjutkan kapan saja.',[
+  {label:'Lanjut bermain',action:()=>{closeModal();state='playing';acquireWakeLock();getAudio();if(pendingAdvance)advanceRound();}},
+  {label:'Ulang dari awal',secondary:true,action:()=>confirmRestart()},
+  {label:'Keluar ke beranda',secondary:true,action:()=>{closeModal();state='menu';gameStarted=false;showScreen('home');}}
+ ]);
+}
+function confirmRestart(){
+ const wasPlaying=state==='playing';if(wasPlaying){state='paused';releaseWakeLock();}
+ openModal('Ulang permainan?','Skor ronde ini akan dimulai lagi dari nol.',[
+  {label:'Ya, ulangi',action:()=>{closeModal();startGame();}},
+  {label:'Kembali',secondary:true,action:()=>{closeModal();if(wasPlaying){state='playing';acquireWakeLock();getAudio();}}}
+ ]);
+}
+function toggleMute(){saved.sound=!saved.sound;saveState();$('soundToggle').checked=saved.sound;showToast(saved.sound?'Efek suara aktif':'Efek suara dimatikan');if(saved.sound)beep();}
+function toggleFullscreen(){
+ try{if(!document.fullscreenElement){const p=document.documentElement.requestFullscreen?.();if(p&&p.catch)p.catch(()=>showToast('Layar penuh tidak didukung di browser ini.'));}else document.exitFullscreen?.();}catch(_){showToast('Layar penuh tidak tersedia di perangkat ini.');}
+}
+function resetData(){
+ openModal('Hapus data tersimpan?','Skor terbaik, bintang, dan pengaturan akan kembali ke awal.',[
+  {label:'Reset data',action:()=>{saved=defaults();saveState();syncSettings();updateHome();closeModal();showToast('Data tersimpan sudah direset.');}},
+  {label:'Batalkan',secondary:true,action:closeModal}
+ ]);
+}
+function syncSettings(){$('soundToggle').checked=saved.sound;$('vibrateToggle').checked=saved.vibrate;$('difficulty').value=saved.difficulty;}
+$('startBtn').addEventListener('click',startGame);$('howBtn').addEventListener('click',()=>showScreen('how'));$('howStartBtn').addEventListener('click',startGame);$('serveBtn').addEventListener('click',serve);$('pauseBtn').addEventListener('click',pauseGame);$('againBtn').addEventListener('click',startGame);
+$('menuToggle').addEventListener('click',()=>{const open=$('nav').classList.toggle('open');$('menuToggle').setAttribute('aria-expanded',String(open));});
+document.querySelectorAll('[data-screen]').forEach(b=>b.addEventListener('click',()=>showScreen(b.dataset.screen)));
+document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>showScreen(b.dataset.goto)));
+$('soundToggle').addEventListener('change',e=>{saved.sound=e.target.checked;saveState();if(saved.sound)beep();});
+$('vibrateToggle').addEventListener('change',e=>{saved.vibrate=e.target.checked;saveState();});
+$('difficulty').addEventListener('change',e=>{saved.difficulty=e.target.value;saveState();$('settingsStatus').textContent='Tingkat tantangan tersimpan.';});
+$('resetDataBtn').addEventListener('click',resetData);
+document.addEventListener('keydown',e=>{
+ if(e.target.matches('input,select,textarea'))return;
+ if(e.key==='Escape'||e.key.toLowerCase()==='p'){if(state==='playing')pauseGame();else if(state==='paused'){$('modalActions').querySelector('button')?.click();}}
+ if(e.key.toLowerCase()==='m')toggleMute();
+ if(e.key.toLowerCase()==='f')toggleFullscreen();
+ if(e.key.toLowerCase()==='r'&&state==='playing')confirmRestart();
+ if(e.key==='Enter'&&state==='menu')startGame();
+});
+window.addEventListener('blur',()=>{if(state==='playing')pauseGame();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){if(state==='playing')pauseGame();if(audio&&audio.state==='running')audio.suspend().catch(()=>{});}else if(state==='playing'){getAudio();}});
+window.addEventListener('resize',()=>{clearTimeout(window.__dmResize);window.__dmResize=setTimeout(()=>document.documentElement.style.setProperty('--vh',`${window.innerHeight*.01}px`),180);});
+if(window.visualViewport)window.visualViewport.addEventListener('resize',()=>{document.documentElement.style.setProperty('--visual-height',`${window.visualViewport.height}px`);});
+try{history.pushState({dapur:true},'','#dapur');window.addEventListener('popstate',()=>{if(state==='playing')pauseGame();history.pushState({dapur:true},'','#dapur');});}catch(_){}
+document.addEventListener('contextmenu',e=>{if(e.target.closest('.ingredient,.btn,.nav-button'))e.preventDefault();});
+window.addEventListener('beforeunload',e=>{if(gameStarted&&state==='playing'){e.preventDefault();e.returnValue='';}});
+window.addEventListener('error',()=>showToast('Ada gangguan kecil. Muat ulang halaman untuk memulai kembali.'));
+syncSettings();updateHome();
+if(!saved.onboarded){setTimeout(()=>showToast('Petunjuk: pilih bahan sesuai urutan resep, lalu sajikan.'),700);}
+})();
+</script>
+</body>
+</html>
